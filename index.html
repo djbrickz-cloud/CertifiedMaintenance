@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certified Maintenance | Online Presence Review</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0f172a;
+      --navy-soft: #1e293b;
+      --red: #b91c1c;
+      --blue: #1d4ed8;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 14px;
+      --max: 920px;
+      --warn-bg: #fff7ed;
+      --warn-border: #fdba74;
+      --bad-bg: #fef2f2;
+      --bad-border: #fca5a5;
+      --good-bg: #f0fdf4;
+      --good-border: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      background: var(--white);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
+    }
+
+    .topbar {
+      height: 6px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--red) 50%, var(--blue) 50%, var(--blue) 100%);
+    }
+
+    .wrap {
+      padding: 0 32px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #0f172a 0%, #172554 100%);
+      color: white;
+      padding: 48px 0 42px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      line-height: 1.02;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      letter-spacing: 0.4px;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,0.82);
+      font-size: 1.05rem;
+      max-width: 560px;
+    }
+
+    .score-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(255,255,255,0.62);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .score-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 4rem;
+      line-height: 1;
+      color: #fca5a5;
+    }
+
+    .score-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .intro {
+      padding: 34px 0 18px;
+    }
+
+    .intro-card {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+    }
+
+    .intro-card p {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .intro-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .section {
+      padding: 22px 0 8px;
+    }
+
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.05;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-bottom: 22px;
+      font-size: 1rem;
+    }
+
+    .finding-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .finding {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .finding.bad {
+      background: var(--bad-bg);
+      border-color: var(--bad-border);
+    }
+
+    .finding.warn {
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+    }
+
+    .finding.good {
+      background: var(--good-bg);
+      border-color: var(--good-border);
+    }
+
+    .finding h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .finding p {
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .finding .tag {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tag.bad { color: #991b1b; }
+    .tag.warn { color: #9a3412; }
+    .tag.good { color: #166534; }
+
+    .compare-table-wrap {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--navy);
+    }
+
+    th {
+      text-align: left;
+      padding: 14px 16px;
+      color: rgba(255,255,255,0.78);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.97rem;
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    tbody tr:first-child td {
+      border-top: none;
+    }
+
+    tbody tr.highlight {
+      background: #fff7f7;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill.red {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .pill.orange {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .pill.green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .pill.gray {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .plan-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .plan-step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      align-items: start;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--blue) 100%);
+      color: white;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .plan-step h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
+
+    .plan-step p {
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .time {
+      color: var(--blue);
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .preview {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .preview-top {
+      background: #111827;
+      color: rgba(255,255,255,0.7);
+      padding: 12px 18px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .preview-body {
+      padding: 26px 24px;
+      background: linear-gradient(180deg, #0f172a 0%, #172554 100%);
+      color: white;
+    }
+
+    .preview-brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .preview-sub {
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 20px;
+      font-size: 0.96rem;
+    }
+
+    .preview-hero {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .preview-hero h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      line-height: 1.02;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .preview-hero p {
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin-bottom: 16px;
+    }
+
+    .preview-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mini-btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .mini-btn.red {
+      background: var(--red);
+      color: white;
+    }
+
+    .mini-btn.gray {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+
+    .cta {
+      padding: 30px 0 40px;
+    }
+
+    .cta-box {
+      background: linear-gradient(180deg, #111827 0%, #1e3a8a 100%);
+      color: white;
+      border-radius: 18px;
+      padding: 34px 28px;
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      line-height: 1.05;
+    }
+
+    .cta-box p {
+      max-width: 620px;
+      margin: 0 auto 20px;
+      color: rgba(255,255,255,0.82);
+      font-size: 1rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn.red {
+      background: var(--red);
+      color: white;
+    }
+
+    .btn.blue {
+      background: var(--blue);
+      color: white;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 0 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 760px) {
+      .wrap {
+        padding: 0 20px;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-step {
+        grid-template-columns: 1fr;
+      }
+
+      .step-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+      }
+
+      .compare-table-wrap {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar"></div>
+
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Prepared for Ed • Certified Maintenance</div>
+            <h1>Here’s where your online presence stands right now.</h1>
+            <p>
+              I pulled this together based on what customers would see if they searched for your business today.
+              This is not fluff. Just what’s missing, what’s hurting you, and what I’d fix first.
+            </p>
+          </div>
+
+          <div class="score-box">
+            <div class="score-label">Presence Score</div>
+            <div class="score-number">22</div>
+            <div class="score-sub">out of 100</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="wrap">
+        <div class="intro-card">
+          <p>
+            Ed, the main issue is simple. When people look your business up, there’s not enough there to build trust fast.
+            You’ve got a real advantage with the NATE certification, but online, that advantage is basically hidden.
+          </p>
+          <p>
+            So this isn’t about “branding” for the sake of branding. It’s about making sure people can find you, trust you,
+            and call you instead of the next company.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">What I found</h2>
+        <p class="section-desc">
+          These are the biggest issues showing up right now.
+        </p>
+
+        <div class="finding-list">
+          <div class="finding bad">
+            <h3>No website</h3>
+            <p>
+              Right now, if someone hears about Certified Maintenance and searches for you, there’s nowhere solid to land.
+              No service breakdown, no trust-building page, no easy path to call you from a real business site.
+            </p>
+            <div class="tag bad">Critical issue</div>
+          </div>
+
+          <div class="finding bad">
+            <h3>No real Google presence</h3>
+            <p>
+              Yelp alone is not enough. Most local service decisions happen through Google search and Google Maps.
+              If you’re not positioned there properly, you’re losing visibility before the conversation even starts.
+            </p>
+            <div class="tag bad">Critical issue</div>
+          </div>
+
+          <div class="finding warn">
+            <h3>Yelp rating is working against you</h3>
+            <p>
+              Nine reviews at 3.2 stars is not strong enough to carry trust, especially when that’s the main thing people can find.
+              Even if your work is solid, the online first impression is too weak.
+            </p>
+            <div class="tag warn">Needs attention</div>
+          </div>
+
+          <div class="finding good">
+            <h3>NATE certification is your real edge</h3>
+            <p>
+              This is the part that matters. Less than 20% of HVAC techs nationwide have it.
+              That gives you a legit trust signal most competitors cannot lean on. Right now it’s just not being shown properly.
+            </p>
+            <div class="tag good">Strong selling point</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">How you stack up right now</h2>
+        <p class="section-desc">
+          Quick side by side view of what a customer would compare.
+        </p>
+
+        <div class="compare-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Website</th>
+                <th>Google Presence</th>
+                <th>Reviews</th>
+                <th>Stars</th>
+                <th>NATE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="highlight">
+                <td><strong>Certified Maintenance</strong></td>
+                <td><span class="pill red">None</span></td>
+                <td><span class="pill red">Weak</span></td>
+                <td><span class="pill orange">9</span></td>
+                <td><span class="pill orange">3.2★</span></td>
+                <td><span class="pill green">Yes</span></td>
+              </tr>
+              <tr>
+                <td>PV Heating & Cooling</td>
+                <td><span class="pill green">Yes</span></td>
+                <td><span class="pill green">Yes</span></td>
+                <td><span class="pill green">85</span></td>
+                <td><span class="pill green">4.6★</span></td>
+                <td><span class="pill gray">Unknown</span></td>
+              </tr>
+              <tr>
+                <td>Moody Heating & Air</td>
+                <td><span class="pill orange">Basic</span></td>
+                <td><span class="pill green">Yes</span></td>
+                <td><span class="pill orange">2</span></td>
+                <td><span class="pill green">4.0★</span></td>
+                <td><span class="pill gray">Unknown</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="note">
+          The crazy part is you may have stronger actual credibility than some of these companies. It’s just not showing online.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">What I’d fix first</h2>
+        <p class="section-desc">
+          This is the straightforward version. Not ten random marketing services. Just the stuff that actually moves the needle.
+        </p>
+
+        <div class="plan-list">
+          <div class="plan-step">
+            <div class="step-num">1</div>
+            <div>
+              <h3>Get the Google side cleaned up</h3>
+              <p>
+                Make sure your business is positioned properly on Google so customers can actually find you in local search and maps.
+              </p>
+              <div class="time">First priority</div>
+            </div>
+          </div>
+
+          <div class="plan-step">
+            <div class="step-num">2</div>
+            <div>
+              <h3>Launch a real website</h3>
+              <p>
+                A clean site built around what customers care about most. What you do, where you work, why they should trust you,
+                and how to call you fast. No over-designed nonsense.
+              </p>
+              <div class="time">Can be live quickly</div>
+            </div>
+          </div>
+
+          <div class="plan-step">
+            <div class="step-num">3</div>
+            <div>
+              <h3>Lead with the NATE certification</h3>
+              <p>
+                That should be one of the first things people see. It gives you a real-world advantage and separates you from basic local competitors.
+              </p>
+              <div class="time">Built into the site and messaging</div>
+            </div>
+          </div>
+
+          <div class="plan-step">
+            <div class="step-num">4</div>
+            <div>
+              <h3>Start improving the review picture</h3>
+              <p>
+                Over time, the goal is to build a stronger trust layer where people are actually looking. Right now the current rating setup is too thin.
+              </p>
+              <div class="time">Ongoing trust play</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2 class="section-title">What the site would feel like</h2>
+        <p class="section-desc">
+          Not “marketing agency HVAC template.” More like a real local company that clearly knows what they’re doing.
+        </p>
+
+        <div class="preview">
+          <div class="preview-top">certifiedmaintenancehvac.com</div>
+          <div class="preview-body">
+            <div class="preview-brand">Certified Maintenance</div>
+            <div class="preview-sub">Heating and Cooling Service in Mableton, GA</div>
+
+            <div class="preview-hero">
+              <h3>AC not cooling? We fix it.</h3>
+              <p>
+                Straight answers, solid work, and a clear way for customers to reach you without digging through random listing sites.
+              </p>
+              <div class="preview-buttons">
+                <span class="mini-btn red">Call Now</span>
+                <span class="mini-btn gray">Text for a Quote</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="note">
+          That tone works better because it sounds like a real business owner, not a page generator.
+        </p>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-box">
+          <h2>Bottom line</h2>
+          <p>
+            You already have something real to build around. The certification. The work. The local angle.
+            The problem is the online setup is not helping you yet. Once that part gets cleaned up, you look a lot stronger fast.
+          </p>
+
+          <div class="cta-buttons">
+            <a href="tel:+1YOURNUMBER" class="btn red">Call Brandon</a>
+            <a href="mailto:brandonrbjackson@gmail.com?subject=Certified Maintenance Review" class="btn blue">Send Message</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div class="wrap">
+        Prepared by Brandon · Local Life SEO Solutions<br>
+        Review based on publicly visible business information.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
